@@ -1,6 +1,17 @@
 ![](https://miro.medium.com/max/3662/1*tg7akErlMSyCLQxrMtQIYw.png)
 
 ## CLIP: **Learning Transferable Visual Models From Natural Language Supervision**
+This repository offers sources to gain an understanding of Natural Language Supervision and CLIP. 
+Here you can find:
+- Annonotated papers about Natural Language Supervision
+- Notebooks with demos for:
+    - Linking text to images: CLIP
+    - Zero-shot text generation: DALL-E (mini), BigSleep, CLIP-GLASS
+- A presentation on the topic in two formats (short, long)
+
+Below you will find a summary of the [CLIP paper](https://arxiv.org/abs/2103.00020), my notes on the most relevant information and "spin-offs" such as DALL-E, CLIP Glass.
+
+This survey has been presented for the seminar "Learning with limited labeled data", organized by the [Explainable Machine Learning](https://www.eml-unitue.de) at the University of Tübingen.
 
 ## Table of contents
 
@@ -46,7 +57,7 @@
 - Multi-modal neurons
 - DALL-E
 
-### Background
+## Background
 
 - [Self-supervised learning of visual features through embedding images into text topic spaces](https://arxiv.org/pdf/1705.08631) **(SELF-SUPERVISED):**
     - Text → Latent Dirichlect Annotation (bayensian) → topic probabilities
@@ -104,7 +115,7 @@ Clip is a model aiming to learn visual representations with natural language sup
 - Efficiency in data computation with Vision Transformers
 - Efficiency in scaling up with the data with contrastive pre-training, compared to image-to-text
 
-### Core idea, motivation
+## Core idea, motivation
 
 - Key idea: measuring the **task learning capabilities** of ML systems
     - Only the FAIR paper (Visual N-grams) has generic pre-training with natural language supervision and tests zero-shot transfer to standard classification datasets
@@ -113,7 +124,7 @@ Clip is a model aiming to learn visual representations with natural language sup
 - Comparison with visual N-grams:
     - ImageNet classification: CLIP (zero-shot, 76,2%), Visual-N (zero-shot, 11,5%), ResNet50 (supervised, around same as clip)
 
-### The model
+## The model
 
 1. Pre-training in a contrastive way to pair text with images
 2. A prompt is fed into the network to ask CLIP what to describe (prompt engineering). i.e: "a photo of {...}" → classification task
@@ -121,7 +132,7 @@ Clip is a model aiming to learn visual representations with natural language sup
 4. New tasks can be taught, such as object counting, object comparison, geolocation, concept visualization
 5. Neurons in higher layers are similar to human multimodal neurons: specialized neurons react to data in various forms (image, text) and represent them in general ideas and concepts
 
-### Experimental Setup
+## Experimental Setup
 
 - **Dataset**:
     - Available options: MS-COCO, Visual Genome (**small**), YFCC100M (**non qualitative**)
@@ -159,14 +170,14 @@ Clip is a model aiming to learn visual representations with natural language sup
         - Optimizer: Adam, decoupled weight-decay regularization, learning rate decay cosine schedule
         - Mini batch size: 32,768
 
-### Methodological components
+## Methodological components
 
 - **Prompt engineering:** "polysemy". Multiple meanings of the same word without a context, thus there are multiple labels for the same word! Prompt engineering improves performance when specifying the type of object or photo for datasets ("a type of pet", "a type of aircraft", "a satellite photo")
 - **Data Overlap Analysis:** overall gain of at most 0.6% accuracy in Birdsnap dataset (12.5% detected overlap of data), average 3.2% of data overlap training-eval. BUT they use a duplicate detector: nearest neighbors in learned embedding space with threshold. Data contamination accuracy = All - clean (accuracy on subsets splits)
 - **Ensembling:** over the embedding space, averaged embedding representations → cost of a single classifier. For each embedding: different context prompts. ImageNet: 80 context prompts → +3.5% respectively to single default text. Overall prompt engineering + ensembling: +5%
 - **Linear probing:** evaluating representation learning with linear classifiers instead of end-to-end fine tuning (expensive, many params, masks failures). Comparison with supervised models: CLIP is always more computationally efficient → best gain with scaling. Moreover, supervision models may collapse intra-class details → worse performance.
 
-### Performances
+## Performance
 
 - Scaling: 44x increase in compute (5 versions of ResNet), CLIP follows a similar trend to GPT → the error decreases smoothly
 - Data efficiency in Zero-shot learning vs. few shot (Figure 7)
@@ -179,7 +190,7 @@ Clip is a model aiming to learn visual representations with natural language sup
 - **ImageNet Adaptation:** adapting CLIP to ImageNet results in +9.2% accuracy (3 SOTA years improvement) → uncertain whether in-distribution patterns are learned or spurious correlations. Major gain for fully supervised CLIP.
 - **Human Performance Comparison:** zero-shot clip outperforms human performance overall. However, humans reveal a consistent gap in performance between zero-shot and one-shot learning because they use base knowledge to update priors on what's uncertain. This could be replicated in CLIP. Hard problems for CLIP revealed hard for humans as well.
 
-### Limitations
+## Limitations
 
 - **Computational cost**: 1000x scaling required to reach SOTA performance
 - **Poor task-learning generalization**: random performance (distance to nearest car)
@@ -188,6 +199,13 @@ Clip is a model aiming to learn visual representations with natural language sup
 - **CLIP does not address data efficiency:** CLIP does not address the issue, it just has a very large source of supervision → ideal self supervision + self-training
 - **Unfiltered pairs** and social biases
 - **Complex tasks not describable with text**, inefficient few-shot learning compared to human performance
+
+### Downsides
+
+- Fallacies in abstraction: typography attack, biases in the data
+- Poor generalization out of the pre-training dataset
+- Poor performance on highly-detailed tasks such as vehicle model classification
+- Struggles in abstract novel tasks such as object counting
 
 ### Broader impacts
 
@@ -200,7 +218,8 @@ Clip is a model aiming to learn visual representations with natural language sup
 - **Crime categories** predicted for people of certain ages (and races) → class design influences the denigration harm distribution across ages → label design can be crucial for the behavior of the model
 - CLIP **well predicts sex given images of men/females with various occupations** → lower threshold of chi-square test results lower quality of labels (figure 18)
 
-### Multimodal neurons
+## Multimodal neurons
+Source: https://openai.com/blog/multimodal-neurons/
 
 - In the brain there are neurons firing to abstract concepts regardless their modalities
 - Likewise, in CLIP → neurons in last layers work on loose abstract representations of ideas, regardless the modality
@@ -209,13 +228,7 @@ Clip is a model aiming to learn visual representations with natural language sup
     - **Maximal activating images** in the dataset
 - How CLIP classifies: composition of abstract concepts in an algebric way (sparse linear probe):  similarly to word2vec, the learned concepts are combined linearly
 
-### Downsides
-
-- Fallacies in abstraction: typography attack, biases in the data
-- Poor generalization out of the pre-training dataset
-- Poor performance on highly-detailed tasks such as vehicle model classification
-- Struggles in abstract novel tasks such as object counting
-
+## Image Generation
 ### CLIP + GANS
 
 - [Generating images from caption and vice versa via CLIP-Guided Generative Latent Space Search](https://arxiv.org/pdf/2102.01645.pdf) (Galatolo et al.): combining a GAN with CLIP to generate images that minimize the distance text-img calculated by CLIP. A genetic algorithm aims to minimize the discrimination loss and pick the optimal noise image from a defined noise distribution.
