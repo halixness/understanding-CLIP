@@ -4,9 +4,10 @@
 This repository offers sources to gain an understanding of Natural Language Supervision and CLIP. 
 Here you can find:
 - Annonotated papers about Natural Language Supervision
-- Notebooks with demos for:
-    - Linking text to images: CLIP
-    - Zero-shot text generation: DALL-E (mini), BigSleep, CLIP-GLASS
+- [Notebooks](notebooks) with demos for:
+    - **Linking text to images**: CLIP
+    - **Zero-shot text generation**: DALL-E (mini), BigSleep, CLIP-GLASS
+    - **Natural Language Video Search**: CLIP in youtube videos
 - A presentation on the topic in two formats (short, long)
 
 Below you will find a summary of the [CLIP paper](https://arxiv.org/abs/2103.00020), my notes on the most relevant information and "spin-offs" such as DALL-E, CLIP Glass.
