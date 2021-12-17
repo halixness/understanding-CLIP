@@ -12,7 +12,7 @@ Here you can find:
 
 Below you will find a summary of the [CLIP paper](https://arxiv.org/abs/2103.00020), my notes on the most relevant information and "spin-offs" such as DALL-E, CLIP Glass.
 
-This survey has been presented for the seminar "Learning with limited labeled data", organized by the [Explainable Machine Learning](https://www.eml-unitue.de) at the University of Tübingen.
+This survey has been presented for the seminar "Learning with limited labeled data", organized by the [Explainable Machine Learning group](https://www.eml-unitue.de) at the University of Tübingen.
 
 ## Table of contents
 
