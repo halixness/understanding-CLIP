@@ -255,3 +255,14 @@ Source: https://openai.com/blog/multimodal-neurons/
         2. txt_encoding + <BOS> → Transformer Decoder → img_token_1 (continue in loop)
         3. img_tokens → VQVAE Decoder → image
         4. CLIP used to select the best matching images (multiple images can be inferred depending on size
+    
+ ### Cite this repo 
+ ```
+  @misc{
+    Calanzone2021, 
+    title={Halixness/Understanding-CLIP: Repo from the "learning with limited labeled data" Seminar @ uni of tuebingen. A collection of notes, notebooks and slideshows to understand clip and natural language supervision.}, 
+    url={https://github.com/halixness/understanding-CLIP}, 
+    journal={GitHub}, 
+    author={Calanzone, Diego}
+    } 
+  ```  
